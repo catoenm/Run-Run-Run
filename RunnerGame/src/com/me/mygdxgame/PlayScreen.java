@@ -17,24 +17,28 @@ public class PlayScreen implements Screen{
 	
 	ArrayList<Bullet> bullets;
 	ArrayList<Truck> trucks;
+	ArrayList<Airplane> planes;
 	Iterator <Bullet> bulletIterator;
 	Iterator <Truck> truckIterator;
+	Iterator <Airplane> planeIterator;
 	CButton shootButton;
 	Game game;
 	SpriteBatch batch;
-	Texture cloud, background, playerSheet, roadLines, hearts, truck, rock,  shootButtonTex, bulletTex, roadBack, spaceBack;
+	Texture cloud, background, playerSheet, roadLines, hearts, truck, planeTex, rockTex, shootButtonTex, bulletTex, roadBack, spaceBack;
 	Player player;
 	double vel = 0;
 	boolean jumping = false, doubleJump = false, startCloud = false, waiting=false, shoot=false, truck1Hit=false, truck2Hit=false;
-	double time = 0, scoreTime = 0, reloadTime = 0, truckTime=0;
-	int score = 0, ammo = 3, numTrucks=0;
+	double time = 0, scoreTime = 0, reloadTime = 0, truckTime=0, planeTime=0;
+	int score = 0, ammo = 3, numTrucks=0, numPlanes=0;
 	double gameSpeed = WIDTH/150;
 	BitmapFont font;
 	BitmapFont shadow;
 	
 	Cloud cloud1, cloud2;
-	Rock rock1;
+
 	Bullet bullet;
+	Airplane airplane;
+	Rock rock;
 	Vector2 cloudPosition, truckPosition, linePosition, backPos1, backPos2, playerPos, bulletPos;
 
 	
@@ -51,9 +55,11 @@ public class PlayScreen implements Screen{
 		player.updatePlayer();
 		checkFire();
 		makeTrucks();
+		makePlanes();
 		checkJump();
 		updateBullets();
-		updateTrucks(truckIterator);
+		updatePlanes();
+		updateTrucks();
 		cloud1.update();
 		cloud2.update();
 		playerPos.y += vel;
@@ -67,6 +73,7 @@ public class PlayScreen implements Screen{
 		
 		checkCollisions();
 		bulletTruckCollision();
+		bulletPlaneCollision();
 		
 		batch.begin();
 		batch.draw(background, backPos1.x, 0, WIDTH * 2, HEIGHT);
@@ -78,6 +85,7 @@ public class PlayScreen implements Screen{
 		font.draw(batch, " Ammo: " + ammo, WIDTH/2 - WIDTH/6, HEIGHT - HEIGHT/8);
 		drawBullets();
 		drawTrucks();
+		drawPlanes();
 		cloud1.draw();
 		cloud2.draw();
 		
@@ -100,10 +108,17 @@ public class PlayScreen implements Screen{
 				ammo++;
 			reloadTime = 0;
 		}
+		
 		truckTime+= Gdx.graphics.getDeltaTime();
 		if(truckTime > 3){
 			numTrucks++;
 			truckTime=0;
+		}
+		
+		planeTime+=Gdx.graphics.getDeltaTime();
+		if(planeTime>5){
+			numPlanes++;
+			planeTime=0;
 		}
 	}
 	
@@ -135,27 +150,53 @@ public class PlayScreen implements Screen{
 		return;
 	}
 	
-	void updateTrucks(Iterator<Truck> truckIterator){
+	void updateTrucks(){
 		truckIterator = trucks.iterator();
 		while(truckIterator.hasNext()){
 			Truck nextTruck = truckIterator.next();
-			nextTruck.update(truckIterator); 
+			nextTruck.update(); 
+			if (nextTruck.getX() < -WIDTH/8)
+				truckIterator.remove();
 		}
 		return;
 	}
 	
 	void makeTrucks(){
-		int n= (int) (Math.random()*3+1);
+		int n= (int) (Math.random()*4+1);
 
 		if(n==1 && numTrucks>0){
-				trucks.add (new Truck((int) (HEIGHT/7), batch, truck, (int) (WIDTH)));
+				trucks.add (new Truck((int) (HEIGHT/10), batch, truck, (int) (WIDTH)));
 				numTrucks--;
 		}
-		if(n==2);
-		//print a plane
-		if(n==3&& numTrucks>0){
-			trucks.add (new Truck((int) (HEIGHT/7), batch, truck, (int) (WIDTH)));
-			numTrucks--;System.out.println("3");
+
+	}
+	
+	void drawPlanes(){
+		planeIterator = planes.iterator();
+		while(planeIterator.hasNext()){
+			Airplane nextPlane = planeIterator.next();
+			nextPlane.draw();
+		}
+		return;
+	}
+	
+	void updatePlanes(){
+		planeIterator = planes.iterator();
+		while(planeIterator.hasNext()){
+			Airplane nextPlane = planeIterator.next();
+			nextPlane.update(); 
+			if (nextPlane.getX() < -WIDTH/8)
+				planeIterator.remove();
+		}
+		return;
+	}
+	
+	void makePlanes(){
+		int height= (int)(Math.random()*HEIGHT/2+HEIGHT/3);
+		int n= (int) (Math.random()*10+1);
+		if(n==5 && numPlanes>0){
+			planes.add(new Airplane(height, batch, planeTex, (int) WIDTH));
+			numPlanes--;
 		}
 	}
 	
@@ -168,6 +209,21 @@ public class PlayScreen implements Screen{
 				Bullet nextBullet = bulletIterator.next();
 				if (nextTruck.getOverallBounds().overlaps(nextBullet.getBounds())){
 					truckIterator.remove();
+					bulletIterator.remove();
+				}
+			}
+		}
+	}
+	
+	void bulletPlaneCollision(){
+		planeIterator = planes.iterator();
+		bulletIterator = bullets.iterator();
+		while (planeIterator.hasNext()){
+			Airplane nextPlane = planeIterator.next();
+			while(bulletIterator.hasNext()){
+				Bullet nextBullet = bulletIterator.next();
+				if (nextPlane.getBounds().overlaps(nextBullet.getBounds())){
+					planeIterator.remove();
 					bulletIterator.remove();
 				}
 			}
@@ -197,7 +253,7 @@ public class PlayScreen implements Screen{
 	}
 
 	void checkJump(){
-		if ( Gdx.input.isTouched() && playerPos.y <= HEIGHT/9 && !shootButton.getIsClicked()){
+		if (Gdx.input.isTouched() && playerPos.y <= HEIGHT/9 && !shootButton.getIsClicked()){
 			playerPos.y += HEIGHT/150;
 			vel += HEIGHT/40;
 			jumping = true;
@@ -260,15 +316,16 @@ public class PlayScreen implements Screen{
 		background = new Texture(Gdx.files.internal("back.png"));
 		playerSheet = new Texture(Gdx.files.internal("sheet.png"));
 		truck = new Texture(Gdx.files.internal("truck.png"));
-		rock = new Texture(Gdx.files.internal("Rock.png"));
+		rockTex = new Texture(Gdx.files.internal("Rock.png"));
 		bulletTex = new Texture(Gdx.files.internal("Bullet.png"));
+		planeTex = new Texture(Gdx.files.internal("Plane.png"));
 		playerPos = new Vector2(WIDTH/10, HEIGHT/10);
 		player = new Player(playerSheet, playerPos);
 		cloudPosition = new Vector2(WIDTH, WIDTH/3);
 		truckPosition = new Vector2(WIDTH, WIDTH/3);
 		cloud1 = new Cloud ((int) (HEIGHT/2), batch, cloud, (int) WIDTH);
 		cloud2 = new Cloud ((int) (HEIGHT/2 + HEIGHT/7), batch, cloud, (int) (WIDTH * 1.5));
-		rock1 = new Rock ((int) (HEIGHT/2), batch, rock, (int) WIDTH);
+		rock = new Rock ((int) (HEIGHT/2), batch, rockTex, (int) WIDTH);
 		
 		font = new BitmapFont(Gdx.files.internal("text.fnt"), true);
 		shadow = new BitmapFont(Gdx.files.internal("shadow.fnt"), true);
@@ -280,6 +337,7 @@ public class PlayScreen implements Screen{
 		
 		bullets = new ArrayList<Bullet>();
 		trucks = new ArrayList <Truck>();
+		planes = new ArrayList <Airplane>();
 		shootButton = new CButton((int)WIDTH/20, (int)HEIGHT*7/9, (int)HEIGHT/7, (int)HEIGHT/7, "ShootButton.png", batch);
 	}
 

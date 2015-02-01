@@ -34,13 +34,13 @@ public class Bullet {
 		this.batch = batch;
 		sprite = new Sprite(texture);
 		
-		bounds = new Rectangle(position.x, position.y, WIDTH/10, HEIGHT/10);
+		bounds = new Rectangle(position.x, position.y, WIDTH/11, HEIGHT/11);
 	}
 	
 	public void update(){
 		if (position.x <  WIDTH + WIDTH/10){
 			position.x += WIDTH/125;
-			bounds.set(position.x, position.y, WIDTH/10, HEIGHT/10);
+			bounds.set(position.x, position.y, WIDTH/11, HEIGHT/11);
 		}
 	}
 

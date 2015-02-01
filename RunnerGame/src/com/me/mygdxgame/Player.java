@@ -54,7 +54,7 @@ public class Player{
 		
 		stateTime += Gdx.graphics.getDeltaTime();           // #15
         currentFrame = animation.getKeyFrame(stateTime, true);
-        bounds.set(position.x, position.y - HEIGHT/60, WIDTH/10, HEIGHT/5);
+        bounds.set(position.x, position.y - HEIGHT/100, WIDTH/10, HEIGHT/5);
 
 	}
 	public TextureRegion getTexture(){
