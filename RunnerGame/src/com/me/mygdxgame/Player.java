@@ -51,20 +51,11 @@ public class Player{
 	}
 
 	public void updatePlayer(){
-<<<<<<< HEAD
 		stateTime += Gdx.graphics.getDeltaTime();    
         currentFrame = animation.getKeyFrame(stateTime, true);
         bounds.set(position.x, position.y - HEIGHT/25, WIDTH/10, HEIGHT/6);
 	}
-	
-=======
-		
-		stateTime += Gdx.graphics.getDeltaTime();           // #15
-        currentFrame = animation.getKeyFrame(stateTime, true);
-        bounds.set(position.x, position.y - HEIGHT/60, WIDTH/10, HEIGHT/5);
 
-	}
->>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	public TextureRegion getTexture(){
 		return currentFrame;
 	}

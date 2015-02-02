@@ -1,10 +1,4 @@
 package com.me.mygdxgame;
-<<<<<<< HEAD
-=======
-
-import java.util.Iterator;
-
->>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,7 +28,6 @@ public class Truck {
 		this.texture = texture;
 		
 		bounds1 = new Rectangle(position.x, position.y, WIDTH/4, HEIGHT/7);
-<<<<<<< HEAD
 		bounds2 = new Rectangle(position.x , position.y + WIDTH/10, WIDTH/15, HEIGHT/6);
 		bounds3 = new Rectangle(position.x + WIDTH/10, position.y + HEIGHT/5 + HEIGHT/75, WIDTH/6, HEIGHT/40);
 		overallBounds = new Rectangle(position.x + WIDTH/15, position.y, WIDTH/4, HEIGHT/5);
@@ -47,22 +40,7 @@ public class Truck {
 		bounds2.set(position.x + WIDTH/15, position.y, WIDTH/15, HEIGHT/8);
 		bounds3.set(position.x + WIDTH/12, position.y + HEIGHT/6, WIDTH/6, HEIGHT/42);
 		overallBounds.set(position.x + WIDTH/15, position.y, WIDTH/4, HEIGHT/5);
-=======
-		bounds2 = new Rectangle(position.x + WIDTH/12, position.y-HEIGHT/50 , WIDTH/15, HEIGHT/9);
-		bounds3 = new Rectangle(position.x + WIDTH/10, position.y + HEIGHT/7 + HEIGHT/75, WIDTH/6, HEIGHT/45);
-		overallBounds = new Rectangle(position.x, position.y, WIDTH/4, HEIGHT/7);
-	}
-	
-	void update(Iterator<Truck> truckIterator){
-		if (position.x < -WIDTH/2)
-			truckIterator.remove();
-		position.x -= WIDTH/85;
 		
-		bounds1.set(position.x, position.y, WIDTH/10, HEIGHT/17);
-		bounds2.set(position.x + WIDTH/12, position.y-HEIGHT/50 , WIDTH/15, HEIGHT/9);
-		bounds3.set(position.x + WIDTH/10, position.y + HEIGHT/7 + HEIGHT/75, WIDTH/6, HEIGHT/45);
-		overallBounds.set(position.x, position.y, WIDTH/4, HEIGHT/7);
->>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	}
 	public void draw(){
 		batch.draw(texture, position.x, position.y, WIDTH/4, WIDTH/7);
