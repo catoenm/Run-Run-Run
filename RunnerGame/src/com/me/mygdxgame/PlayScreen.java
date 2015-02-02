@@ -103,10 +103,10 @@ public class PlayScreen implements Screen{
 			updateShips();
 			makeRocks();
 			makeShips();
-			bulletRockCollision();
-			bulletSShipCollision();
 			checkRockCollisions();
 			checkSShipCollisions();
+			bulletRockCollision();
+			bulletSShipCollision();
 			drawRocks();
 			drawsShips();
 		}
@@ -152,7 +152,7 @@ public class PlayScreen implements Screen{
 				truckTime=0;
 			}
 		
-		if(aircraftTime>6){
+			if(aircraftTime>6){
 				numPlanes++;
 				aircraftTime=0;
 			}
@@ -269,7 +269,7 @@ public class PlayScreen implements Screen{
 		}
 	}
 	
-	private void makeShips() {
+	void makeShips() {
 		int height= (int)(Math.random()*HEIGHT/2+HEIGHT/3);
 		int n= (int) (Math.random()*20+1);
 		if(n==5 && numsShips>0){
@@ -286,7 +286,7 @@ public class PlayScreen implements Screen{
 		}
 	}
 	
-	private void makeRocks() {
+	 void makeRocks() {
 		int n = (int) (Math.random()*4+1);
 		if(n==1 && numRocks>0){
 				rocks.add (new Rock((int) (HEIGHT/10), batch, rockTex, (int) (WIDTH)));
@@ -303,7 +303,7 @@ public class PlayScreen implements Screen{
 		}
 	}
 	
-	private void updateShips() {
+	 void updateShips() {
 		spaceshipIterator = spaceShips.iterator();
 		while(spaceshipIterator.hasNext()){
 			Spaceship nextSpaceship = spaceshipIterator.next();
@@ -314,7 +314,7 @@ public class PlayScreen implements Screen{
 		
 	}
 	
-	private void updateRocks() {
+	void updateRocks() {
 		rockIterator = rocks.iterator();
 		while(rockIterator.hasNext()){
 			Rock nextRock = rockIterator.next();
@@ -325,7 +325,7 @@ public class PlayScreen implements Screen{
 		
 	}
 	
-	private void checkSShipCollisions() {
+	 void checkSShipCollisions() {
 		spaceshipIterator = spaceShips.iterator();
 		while(spaceshipIterator.hasNext()){
 			Spaceship nextSpaceship = spaceshipIterator.next();
@@ -336,7 +336,7 @@ public class PlayScreen implements Screen{
 		
 	}
 	
-	private void checkRockCollisions() {
+	 void checkRockCollisions() {
 		rockIterator = rocks.iterator();
 		while(rockIterator.hasNext()){
 			Rock nextRock = rockIterator.next();
@@ -346,36 +346,21 @@ public class PlayScreen implements Screen{
 		}
 	}
 	
-	private void bulletSShipCollision() {
+	 void bulletSShipCollision() {
 		spaceshipIterator = spaceShips.iterator();
 		bulletIterator = bullets.iterator();
 		while (spaceshipIterator.hasNext()){
 			Spaceship nextShip = spaceshipIterator.next();
-			while(spaceshipIterator.hasNext()){
+			while(bulletIterator.hasNext()){System.out.println("2");
 				Bullet nextBullet = bulletIterator.next();
-				if (nextShip.getBounds1().overlaps(nextBullet.getBounds()) || nextShip.getBounds2().overlaps(nextBullet.getBounds())){
-					spaceshipIterator.remove();
+				if (Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextShip.getBounds1()) || Intersector.overlapCircleRectangle(nextBullet.getBounds(),nextShip.getBounds2())){
+					spaceshipIterator.remove();System.out.println("3");
 					bulletIterator.remove();
 				}
 			}
 		}
 	}
 	
-	private void bulletRockCollision() {
-		rockIterator = rocks.iterator();
-		bulletIterator = bullets.iterator();
-		while (rockIterator.hasNext()){
-			Rock nextRock = rockIterator.next();
-			while(bulletIterator.hasNext()){
-				Bullet nextBullet = bulletIterator.next();
-				if (Intersector.overlapCircleRectangle(nextRock.getBounds(),nextBullet.getBounds())){
-					rockIterator.remove();
-					bulletIterator.remove();
-				}
-			}
-		}
-	}
-
 	void bulletTruckCollision(){
 		truckIterator = trucks.iterator();
 		bulletIterator = bullets.iterator();
@@ -383,13 +368,32 @@ public class PlayScreen implements Screen{
 			Truck nextTruck = truckIterator.next();
 			while(bulletIterator.hasNext()){
 				Bullet nextBullet = bulletIterator.next();
-				if (nextTruck.getOverallBounds().overlaps(nextBullet.getBounds())){
+				if (Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextTruck.getOverallBounds())){
 					truckIterator.remove();
 					bulletIterator.remove();
 				}
 			}
 		}
 	}
+	
+	private void bulletRockCollision() {
+	
+		rockIterator = rocks.iterator();
+		bulletIterator = bullets.iterator();
+		while (rockIterator.hasNext()){
+			Rock nextRock = rockIterator.next();
+			while(bulletIterator.hasNext()){
+				Bullet nextBullet = bulletIterator.next();	
+				if (Intersector.overlapCircles(nextBullet.getBounds(),nextRock.getBounds())){
+					
+					rockIterator.remove();
+					bulletIterator.remove();
+				}
+			}
+		}
+	}
+
+	
 	
 	void bulletPlaneCollision(){
 		planeIterator = planes.iterator();
@@ -398,7 +402,7 @@ public class PlayScreen implements Screen{
 			Airplane nextPlane = planeIterator.next();
 			while(bulletIterator.hasNext()){
 				Bullet nextBullet = bulletIterator.next();
-				if ((nextPlane.getBounds1()).overlaps(nextBullet.getBounds()) || nextPlane.getBounds2().overlaps(nextBullet.getBounds())){
+				if ((Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextPlane.getBounds1()) || Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextPlane.getBounds2()))){
 					planeIterator.remove();
 					bulletIterator.remove();
 				}

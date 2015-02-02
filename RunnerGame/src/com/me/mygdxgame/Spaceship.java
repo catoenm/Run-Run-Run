@@ -22,7 +22,7 @@ public class Spaceship{
 		this.batch = batch;
 		this.texture = texture;
 
-		bounds1 = new Rectangle(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/9);
+		bounds1 = new Rectangle(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/9);
 		bounds2 = new Rectangle(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
 		}
 	

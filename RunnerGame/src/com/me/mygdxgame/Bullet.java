@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -16,7 +17,8 @@ public class Bullet {
 	SpriteBatch batch;
 	Texture texture;
 	Vector2 position;
-	Rectangle bounds;
+	//Rectangle bounds;
+	Circle bounds;
 	boolean active;
 	Sprite sprite;
 	
@@ -34,13 +36,13 @@ public class Bullet {
 		this.batch = batch;
 		sprite = new Sprite(texture);
 
-		bounds = new Rectangle(position.x, position.y, WIDTH/10, HEIGHT/10);
+		bounds = new Circle(position, WIDTH/30);
 	}
 	
 	public void update(){
 		if (position.x <  WIDTH + WIDTH/10){
 			position.x += WIDTH/125;
-			bounds.set(position.x, position.y, WIDTH/10, HEIGHT/10);
+			bounds.set(position.x + WIDTH/40 ,position.y + WIDTH/40, WIDTH/30);
 		}
 	}
 
@@ -58,7 +60,7 @@ public class Bullet {
 		batch.draw(sprite, position.x, position.y, WIDTH/10, HEIGHT/10);
 	}
 	
-	public Rectangle getBounds() {
+	public Circle getBounds() {
 		return bounds;
 	}
 

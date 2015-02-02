@@ -22,12 +22,12 @@ public class Rock{
 		position = new Vector2(x, height);
 		this.batch = batch;
 		this.texture = texture;
-		bounds = new Circle(position, WIDTH/45);
+		bounds = new Circle(position, WIDTH/12);
 	}
 	
 	void update(){
 		position.x -= WIDTH/85;
-		bounds.set(position.x,position.y, WIDTH/45);
+		bounds.set(position.x + WIDTH/15 ,position.y + WIDTH/30, WIDTH/12);
 
 	}
 	public void draw(){
