@@ -1,5 +1,6 @@
 package com.me.mygdxgame;
 
+<<<<<<< HEAD
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -55,3 +56,15 @@ public class Rock{
 	}
 	
 }
+=======
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class Rock {
+
+	public Rock(int i, SpriteBatch batch, Texture rock, int wIDTH) {
+		// TODO Auto-generated constructor stub
+	}
+
+}
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51

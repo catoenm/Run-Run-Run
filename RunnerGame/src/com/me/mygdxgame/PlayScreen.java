@@ -8,10 +8,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+<<<<<<< HEAD
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+=======
+import com.badlogic.gdx.math.Vector2;
+
+
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 public class PlayScreen implements Screen{
 	
 	final float WIDTH = Gdx.graphics.getWidth();
@@ -19,6 +25,7 @@ public class PlayScreen implements Screen{
 	
 	ArrayList<Bullet> bullets;
 	ArrayList<Truck> trucks;
+<<<<<<< HEAD
 	ArrayList<Airplane> planes;
 	ArrayList<Crate> crates;
 	ArrayList<Rock> rocks;
@@ -38,11 +45,29 @@ public class PlayScreen implements Screen{
 	boolean jumping = false, doubleJump = false, startCloud = false, waiting=false, shoot=false, truck1Hit=false, truck2Hit=false;
 	double time = 0, scoreTime = 0, reloadTime = 0, truckTime=0, aircraftTime=0, crateTime=0, rockTime=0;;
 	int score = 0, ammo = 3, numTrucks=0, numPlanes=0, numCrates=0, numRocks=0,numsShips=0;
+=======
+	Iterator <Bullet> bulletIterator;
+	Iterator <Truck> truckIterator;
+	CButton shootButton;
+	Game game;
+	SpriteBatch batch;
+	Texture cloud, background, playerSheet, roadLines, hearts, truck, rock,  shootButtonTex, bulletTex, roadBack, spaceBack;
+	Player player;
+	double vel = 0;
+	boolean jumping = false, doubleJump = false, startCloud = false, waiting=false, shoot=false, truck1Hit=false, truck2Hit=false;
+	double time = 0, scoreTime = 0, reloadTime = 0, truckTime=0;
+	int score = 0, ammo = 3, numTrucks=0;
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	double gameSpeed = WIDTH/150;
 	BitmapFont font;
 	BitmapFont shadow;
 	
 	Cloud cloud1, cloud2;
+<<<<<<< HEAD
+=======
+	Rock rock1;
+	Bullet bullet;
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	Vector2 cloudPosition, truckPosition, linePosition, backPos1, backPos2, playerPos, bulletPos;
 
 	
@@ -58,11 +83,18 @@ public class PlayScreen implements Screen{
 		updateLinePos();
 		player.updatePlayer();
 		checkFire();
+<<<<<<< HEAD
 		
 		
 		checkJump();
 	
 		
+=======
+		makeTrucks();
+		checkJump();
+		updateBullets();
+		updateTrucks(truckIterator);
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 		cloud1.update();
 		cloud2.update();
 		playerPos.y += vel;
@@ -74,14 +106,25 @@ public class PlayScreen implements Screen{
 		
 		updateTimes();
 		
+<<<<<<< HEAD
 		batch.begin();
 		batch.draw(background, backPos1.x, 0, WIDTH * 2, HEIGHT);
 		batch.draw(background, backPos2.x, 0, WIDTH * 2  + WIDTH/20, HEIGHT);
 		if (score < 150)
+=======
+		checkCollisions();
+		bulletTruckCollision();
+		
+		batch.begin();
+		batch.draw(background, backPos1.x, 0, WIDTH * 2, HEIGHT);
+		batch.draw(background, backPos2.x, 0, WIDTH * 2  + WIDTH/20, HEIGHT);
+		if (score < 50)
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 			batch.draw(roadLines, linePosition.x, linePosition.y, WIDTH * 2, HEIGHT/5);
 		batch.draw(player.getTexture(), WIDTH/10, playerPos.y, WIDTH/7, HEIGHT/5);
 		font.draw(batch, " Score: " + score, WIDTH/2 - WIDTH/6, HEIGHT - HEIGHT/80);
 		font.draw(batch, " Ammo: " + ammo, WIDTH/2 - WIDTH/6, HEIGHT - HEIGHT/8);
+<<<<<<< HEAD
 		
 		updateBullets();
 		updateCrates();
@@ -124,6 +167,20 @@ public class PlayScreen implements Screen{
 		batch.end();
 	}
 
+=======
+		drawBullets();
+		drawTrucks();
+		cloud1.draw();
+		cloud2.draw();
+		
+		shootButton.drawButton();
+
+			
+		batch.end();
+		
+	}
+	
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	void updateTimes(){
 		scoreTime += Gdx.graphics.getDeltaTime();
 		if (scoreTime > 1){
@@ -138,6 +195,7 @@ public class PlayScreen implements Screen{
 				ammo++;
 			reloadTime = 0;
 		}
+<<<<<<< HEAD
 		
 		crateTime+= Gdx.graphics.getDeltaTime();
 		if(crateTime > 25){
@@ -172,6 +230,14 @@ public class PlayScreen implements Screen{
 			}
 		}
 		
+=======
+		truckTime+= Gdx.graphics.getDeltaTime();
+		if(truckTime > 3){
+			numTrucks++;
+			truckTime=0;
+			System.out.println(truckTime);
+		}
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	}
 	
 	void updateBullets(){
@@ -190,6 +256,7 @@ public class PlayScreen implements Screen{
 			Bullet nextBullet = bulletIterator.next();
 			nextBullet.draw();
 		}
+<<<<<<< HEAD
 	}
 	
 	void updateTrucks(){
@@ -379,6 +446,46 @@ public class PlayScreen implements Screen{
 		}
 	}
 
+=======
+		return;
+	}
+	
+	void drawTrucks(){
+		truckIterator = trucks.iterator();
+		while(truckIterator.hasNext()){
+			Truck nextTruck = truckIterator.next();
+			nextTruck.draw();
+		}
+		return;
+	}
+	
+	void updateTrucks(Iterator<Truck> truckIterator){
+		truckIterator = trucks.iterator();
+		while(truckIterator.hasNext()){
+			Truck nextTruck = truckIterator.next();
+			nextTruck.update(truckIterator); 
+		}
+		return;
+	}
+	
+	void makeTrucks(){
+		//
+		int n= (int) (Math.random()*3+1);
+
+		if(n==1 && numTrucks>0){
+				trucks.add (new Truck((int) (HEIGHT/7), batch, truck, (int) (WIDTH)));
+				numTrucks--;
+				System.out.println("1");
+		}
+		if(n==2);
+		//print a plane
+		if(n==3&& numTrucks>0){
+			trucks.add (new Truck((int) (HEIGHT/7), batch, truck, (int) (WIDTH)));
+			numTrucks--;System.out.println("3");
+		}
+	}
+	
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	void bulletTruckCollision(){
 		truckIterator = trucks.iterator();
 		bulletIterator = bullets.iterator();
@@ -394,6 +501,7 @@ public class PlayScreen implements Screen{
 		}
 	}
 	
+<<<<<<< HEAD
 	void bulletPlaneCollision(){
 		planeIterator = planes.iterator();
 		bulletIterator = bullets.iterator();
@@ -422,6 +530,9 @@ public class PlayScreen implements Screen{
 	}
 	
 	void checkTruckCollisions(){
+=======
+	void checkCollisions(){
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 		truckIterator = trucks.iterator();
 		while(truckIterator.hasNext()){
 			Truck nextTruck = truckIterator.next();
@@ -433,14 +544,23 @@ public class PlayScreen implements Screen{
 			}
 			
 			else if (player.getBounds().overlaps(nextTruck.getBounds3())){
+<<<<<<< HEAD
 				vel=0;
 				playerPos.y+= HEIGHT/250;
 			}
 					
+=======
+				playerPos.y+= HEIGHT/250;
+				vel=0;
+			}
+					
+				
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 			if (player.getBounds().overlaps(nextTruck.getBounds1()) || player.getBounds().overlaps(nextTruck.getBounds2()) ||player.getBounds().overlaps(nextTruck.getBounds2()))
 				game.setScreen(new FMainMenu(game));
 		}
 	}
+<<<<<<< HEAD
 	
 	void checkPlaneCollisions(){
 		planeIterator = planes.iterator();
@@ -454,6 +574,11 @@ public class PlayScreen implements Screen{
 
 	void checkJump(){
 		if (Gdx.input.isTouched() && playerPos.y <= HEIGHT/9 && !shootButton.getIsClicked()){
+=======
+
+	void checkJump(){
+		if ( Gdx.input.isTouched() && playerPos.y <= HEIGHT/9 && !shootButton.getIsClicked()){
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 			playerPos.y += HEIGHT/150;
 			vel += HEIGHT/40;
 			jumping = true;
@@ -468,7 +593,11 @@ public class PlayScreen implements Screen{
 			doubleJump=true;
 		}
 		else if (jumping || doubleJump){
+<<<<<<< HEAD
 			vel -= HEIGHT/825;
+=======
+			vel -= HEIGHT/800;
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 		}
 	
 	if ((jumping || doubleJump) && playerPos.y <= HEIGHT/10){
@@ -477,6 +606,11 @@ public class PlayScreen implements Screen{
 			vel = 0;
 			playerPos.y += HEIGHT/150;
 		}
+<<<<<<< HEAD
+=======
+	
+		
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	}
 	
 	
@@ -497,10 +631,24 @@ public class PlayScreen implements Screen{
 			backPos1.x = 2 * WIDTH;
 		backPos2.x -= gameSpeed;
 		if (backPos2.x < -2 * WIDTH)
+<<<<<<< HEAD
 			backPos2.x = 2 * WIDTH;	
 	}
 	
 	@Override
+=======
+			backPos2.x = 2 * WIDTH;
+		
+	}
+	
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	public void show() {
 		Texture.setEnforcePotImages(false);
 		
@@ -510,17 +658,26 @@ public class PlayScreen implements Screen{
 		background = new Texture(Gdx.files.internal("back.png"));
 		playerSheet = new Texture(Gdx.files.internal("sheet.png"));
 		truck = new Texture(Gdx.files.internal("truck.png"));
+<<<<<<< HEAD
 		rockTex = new Texture(Gdx.files.internal("Rock.png"));
 		sShipTex = new Texture(Gdx.files.internal("Spaceship.png"));
 		bulletTex = new Texture(Gdx.files.internal("Bullet.png"));
 		planeTex = new Texture(Gdx.files.internal("Plane.png"));
 		crateTex = new Texture(Gdx.files.internal("Crate.png"));
+=======
+		rock = new Texture(Gdx.files.internal("Rock.png"));
+		bulletTex = new Texture(Gdx.files.internal("Bullet.png"));
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 		playerPos = new Vector2(WIDTH/10, HEIGHT/10);
 		player = new Player(playerSheet, playerPos);
 		cloudPosition = new Vector2(WIDTH, WIDTH/3);
 		truckPosition = new Vector2(WIDTH, WIDTH/3);
 		cloud1 = new Cloud ((int) (HEIGHT/2), batch, cloud, (int) WIDTH);
 		cloud2 = new Cloud ((int) (HEIGHT/2 + HEIGHT/7), batch, cloud, (int) (WIDTH * 1.5));
+<<<<<<< HEAD
+=======
+		rock1 = new Rock ((int) (HEIGHT/2), batch, rock, (int) WIDTH);
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 		
 		font = new BitmapFont(Gdx.files.internal("text.fnt"), true);
 		shadow = new BitmapFont(Gdx.files.internal("shadow.fnt"), true);
@@ -532,30 +689,46 @@ public class PlayScreen implements Screen{
 		
 		bullets = new ArrayList<Bullet>();
 		trucks = new ArrayList <Truck>();
+<<<<<<< HEAD
 		planes = new ArrayList <Airplane>();
 		crates = new ArrayList <Crate>();
 		rocks = new ArrayList <Rock>();
 		spaceShips = new ArrayList <Spaceship>();
+=======
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 		shootButton = new CButton((int)WIDTH/20, (int)HEIGHT*7/9, (int)HEIGHT/7, (int)HEIGHT/7, "ShootButton.png", batch);
 	}
 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
+=======
+		
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
+=======
+		
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
+<<<<<<< HEAD
+=======
+		
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 	}
 
 	@Override
 	public void dispose() {
+<<<<<<< HEAD
 
 		// TODO Auto-generated method stub
 	}
@@ -565,4 +738,11 @@ public class PlayScreen implements Screen{
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
 	}
+=======
+		// TODO Auto-generated method stub
+		
+	}
+
+
+>>>>>>> efd7e639175cb50eaf717c3b6bce6dfcedda6f51
 }
