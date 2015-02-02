@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 
@@ -81,44 +80,7 @@ public class PlayScreen implements Screen{
 		font.draw(batch, " Score: " + score, WIDTH/2 - WIDTH/6, HEIGHT - HEIGHT/80);
 		font.draw(batch, " Ammo: " + ammo, WIDTH/2 - WIDTH/6, HEIGHT - HEIGHT/8);
 		
-		updateBullets();
-		updateCrates();
-		makeCrates();
-		if(score<0){
-		
-			updatePlanes();
-			updateTrucks();
-			makeTrucks();
-			makePlanes();
-			checkTruckCollisions();
-			checkPlaneCollisions();
-			bulletTruckCollision();
-			bulletPlaneCollision();
-			drawTrucks();
-			drawPlanes();
-		}
-		
-		if(score>0){
-			updateRocks();
-			updateShips();
-			makeRocks();
-			makeShips();
-			checkRockCollisions();
-			checkSShipCollisions();
-			bulletRockCollision();
-			bulletSShipCollision();
-			drawRocks();
-			drawsShips();
-		}
-		
-		checkCrateCollisions();
-		drawBullets();
-		drawCrates();
-		
-		cloud1.draw();
-		cloud2.draw();
-		
-		shootButton.drawButton();			
+		updateMakeCreateAll();
 		batch.end();
 	}
 
@@ -144,7 +106,7 @@ public class PlayScreen implements Screen{
 		}
 		
 		aircraftTime+=Gdx.graphics.getDeltaTime();
-		if(score<0){
+		if(score<150){
 			
 			truckTime+= Gdx.graphics.getDeltaTime();
 			if(truckTime > 3){
@@ -351,10 +313,9 @@ public class PlayScreen implements Screen{
 		bulletIterator = bullets.iterator();
 		while (spaceshipIterator.hasNext()){
 			Spaceship nextShip = spaceshipIterator.next();
-			while(bulletIterator.hasNext()){System.out.println("2");
+			while(bulletIterator.hasNext()){
 				Bullet nextBullet = bulletIterator.next();
 				if (Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextShip.getBounds1()) || Intersector.overlapCircleRectangle(nextBullet.getBounds(),nextShip.getBounds2())){
-					spaceshipIterator.remove();System.out.println("3");
 					bulletIterator.remove();
 				}
 			}
@@ -385,7 +346,6 @@ public class PlayScreen implements Screen{
 			while(bulletIterator.hasNext()){
 				Bullet nextBullet = bulletIterator.next();	
 				if (Intersector.overlapCircles(nextBullet.getBounds(),nextRock.getBounds())){
-					
 					rockIterator.remove();
 					bulletIterator.remove();
 				}
@@ -501,6 +461,45 @@ public class PlayScreen implements Screen{
 		if (backPos2.x < -2 * WIDTH)
 
 			backPos2.x = 2 * WIDTH;	
+	}
+	
+	void updateMakeCreateAll(){
+		updateBullets();
+		updateCrates();
+		makeCrates();
+		checkCrateCollisions();
+		drawBullets();
+		drawCrates();
+		
+		if(score<150){
+		
+			updatePlanes();
+			updateTrucks();
+			makeTrucks();
+			makePlanes();
+			checkTruckCollisions();
+			checkPlaneCollisions();
+			bulletTruckCollision();
+			bulletPlaneCollision();
+			drawTrucks();
+			drawPlanes();
+		}
+		
+		if(score>150){
+			updateRocks();
+			updateShips();
+			makeRocks();
+			makeShips();
+			checkRockCollisions();
+			checkSShipCollisions();
+			bulletRockCollision();
+			bulletSShipCollision();
+			drawRocks();
+			drawsShips();
+		}		
+		cloud1.draw();
+		cloud2.draw();
+		shootButton.drawButton();
 	}
 	
 	public void show() {

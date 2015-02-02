@@ -29,8 +29,8 @@ public class Spaceship{
 	void update(){
 		position.x -= WIDTH/85;
 
-		bounds1.set(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/9);
-		bounds2.set(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
+		bounds1.set(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/9);
+		bounds2.set(position.x + WIDTH/10, position.y + HEIGHT/50, WIDTH/5, HEIGHT/20);
 
 	}
 	public void draw(){
