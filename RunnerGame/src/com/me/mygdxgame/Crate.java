@@ -20,7 +20,7 @@ public class Crate {
 		position = new Vector2(x, height);
 		this.batch = batch;
 		this.texture = texture;
-		bounds = new Rectangle(position.x, position.y, HEIGHT/10, HEIGHT/10);
+		bounds = new Rectangle(position.x, position.y, HEIGHT/12, HEIGHT/12);
 	}
 	
 	public double getSpeed() {
@@ -33,20 +33,20 @@ public class Crate {
 
 	public void update(){
 		position.x -= speed;
-		if (position.x < -WIDTH/5){
-			position.x = WIDTH;
-			position.y = (float) (HEIGHT/9 * 4 + Math.random() * 5 * HEIGHT/9);
-			bounds.set(position.x, position.y, HEIGHT/10,HEIGHT/10);
-		}
+		bounds.set(position.x, position.y, HEIGHT/12,HEIGHT/12);
 	}
 	public void draw(){
-		batch.draw(texture, position.x, position.y, WIDTH/5, WIDTH/10);
+		batch.draw(texture, position.x, position.y, WIDTH/12, WIDTH/12);
 	}
 	public float getX(){
 		return position.x;
 	}
 	public float getY(){
 		return position.y;
+	}
+
+	public Rectangle getBounds() {
+		return bounds;
 	}
 	
 }

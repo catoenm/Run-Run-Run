@@ -15,21 +15,24 @@ public class Airplane{
 	Vector2 position;
 	double speed = WIDTH/150;
 
+	float[] vertices;
 
-	Rectangle bounds;
+	Rectangle bounds1, bounds2;
 	
 	public Airplane(int height, SpriteBatch batch, Texture texture, int x){
 		position = new Vector2(x, height);
 		this.batch = batch;
 		this.texture = texture;
-		
-		bounds = new Rectangle(position.x, position.y, WIDTH/4, HEIGHT/4);
+
+		bounds1 = new Rectangle(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/9);
+		bounds2 = new Rectangle(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
 		}
 	
 	void update(){
 		position.x -= WIDTH/85;
-		
-		bounds.set(position.x, position.y, WIDTH/10, HEIGHT/4);
+
+		bounds1.set(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/9);
+		bounds2.set(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
 
 	}
 	public void draw(){
@@ -52,8 +55,11 @@ public class Airplane{
 		return position.y;
 	}
 
-	public Rectangle getBounds() {
-		return bounds;
+	public Rectangle getBounds1() {
+		return bounds1;
+	}
+	public Rectangle getBounds2() {
+		return bounds2;
 	}
 
 
