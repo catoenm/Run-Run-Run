@@ -22,15 +22,15 @@ public class Spaceship{
 		this.batch = batch;
 		this.texture = texture;
 
-		bounds1 = new Rectangle(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/9);
-		bounds2 = new Rectangle(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
+		bounds1 = new Rectangle(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/50);
+		bounds2 = new Rectangle(position.x + WIDTH/8, position.y + HEIGHT/20, WIDTH/10, WIDTH/10);
 		}
 	
 	void update(){
 		position.x -= WIDTH/85;
 
-		bounds1.set(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/9);
-		bounds2.set(position.x + WIDTH/10, position.y + HEIGHT/50, WIDTH/5, HEIGHT/20);
+		bounds1.set(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/12);
+		bounds2.set(position.x + WIDTH/10, position.y + HEIGHT/50, WIDTH/16, HEIGHT/20);
 
 	}
 	public void draw(){

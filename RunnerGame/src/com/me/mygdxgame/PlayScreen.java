@@ -65,7 +65,7 @@ public class PlayScreen implements Screen{
 
 		if (score == 50)
 			background = roadBack;
-		else if (score == 150)
+		else if (score == 125)
 			background = spaceBack;
 		
 		updateTimes();
@@ -106,7 +106,7 @@ public class PlayScreen implements Screen{
 		}
 		
 		aircraftTime+=Gdx.graphics.getDeltaTime();
-		if(score<150){
+		if(score<125){
 			
 			truckTime+= Gdx.graphics.getDeltaTime();
 			if(truckTime > 3){
@@ -317,6 +317,7 @@ public class PlayScreen implements Screen{
 				Bullet nextBullet = bulletIterator.next();
 				if (Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextShip.getBounds1()) || Intersector.overlapCircleRectangle(nextBullet.getBounds(),nextShip.getBounds2())){
 					bulletIterator.remove();
+					score++;
 				}
 			}
 		}
@@ -332,6 +333,7 @@ public class PlayScreen implements Screen{
 				if (Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextTruck.getOverallBounds())){
 					truckIterator.remove();
 					bulletIterator.remove();
+					score++;
 				}
 			}
 		}
@@ -348,6 +350,7 @@ public class PlayScreen implements Screen{
 				if (Intersector.overlapCircles(nextBullet.getBounds(),nextRock.getBounds())){
 					rockIterator.remove();
 					bulletIterator.remove();
+					score++;
 				}
 			}
 		}
@@ -365,6 +368,7 @@ public class PlayScreen implements Screen{
 				if ((Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextPlane.getBounds1()) || Intersector.overlapCircleRectangle(nextBullet.getBounds(), nextPlane.getBounds2()))){
 					planeIterator.remove();
 					bulletIterator.remove();
+					score++;
 				}
 			}
 		}
@@ -395,7 +399,7 @@ public class PlayScreen implements Screen{
 			
 			else if (player.getBounds().overlaps(nextTruck.getBounds3())){
 				vel=0;
-				playerPos.y+= HEIGHT/250;
+				playerPos.y= nextTruck.position.y+ WIDTH/7;
 			}
 	
 			if (player.getBounds().overlaps(nextTruck.getBounds1()) || player.getBounds().overlaps(nextTruck.getBounds2()) ||player.getBounds().overlaps(nextTruck.getBounds2()))
