@@ -30,7 +30,7 @@ public class Truck {
 		bounds1 = new Rectangle(position.x, position.y, WIDTH/4, HEIGHT/7);
 		bounds2 = new Rectangle(position.x , position.y + WIDTH/10, WIDTH/15, HEIGHT/6);
 		bounds3 = new Rectangle(position.x + WIDTH/10, position.y + HEIGHT/5 + HEIGHT/75, WIDTH/6, HEIGHT/40);
-		overallBounds = new Rectangle(position.x + WIDTH/15, position.y, WIDTH/4, HEIGHT/5);
+		overallBounds = new Rectangle(position.x - WIDTH/125, position.y, WIDTH/4, HEIGHT/5);
 	}
 	
 	void update(){
@@ -39,7 +39,7 @@ public class Truck {
 		bounds1.set(position.x, position.y, WIDTH/15, HEIGHT/13);
 		bounds2.set(position.x + WIDTH/15, position.y, WIDTH/15, HEIGHT/8);
 		bounds3.set(position.x + WIDTH/12, position.y + HEIGHT/6, WIDTH/6, HEIGHT/42);
-		overallBounds.set(position.x + WIDTH/15, position.y, WIDTH/4, HEIGHT/5);
+		overallBounds.set(position.x - WIDTH/125, position.y, WIDTH/4, HEIGHT/5);
 		
 	}
 	public void draw(){

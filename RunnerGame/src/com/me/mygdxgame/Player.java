@@ -34,7 +34,7 @@ public class Player{
 		frames = new TextureRegion[row * col];
 		this.position = position;
 		int index = 0;
-		bounds = new Rectangle(position.x, position.y, WIDTH/10, HEIGHT/5);
+		bounds = new Rectangle(position.x, position.y, WIDTH/11, HEIGHT/5);
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				frames[index++] = tmp[i][j];

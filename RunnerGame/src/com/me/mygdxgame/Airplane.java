@@ -21,14 +21,14 @@ public class Airplane{
 		this.batch = batch;
 		this.texture = texture;
 
-		bounds1 = new Rectangle(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/5);
+		bounds1 = new Rectangle(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/6);
 		bounds2 = new Rectangle(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
 		}
 	
 	void update(){
 		position.x -= WIDTH/85;
 
-		bounds1.set(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/5);
+		bounds1.set(position.x, position.y+ HEIGHT/125, WIDTH/16, HEIGHT/6);
 		bounds2.set(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
 	}
 	
