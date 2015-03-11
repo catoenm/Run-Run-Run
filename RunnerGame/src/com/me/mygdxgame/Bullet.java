@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Bullet {
@@ -17,7 +16,7 @@ public class Bullet {
 	SpriteBatch batch;
 	Texture texture;
 	Vector2 position;
-	//Rectangle bounds;
+	double speed=WIDTH/125, speedTime;
 	Circle bounds;
 	boolean active;
 	Sprite sprite;
@@ -40,8 +39,13 @@ public class Bullet {
 	}
 	
 	public void update(){
+		speedTime=Gdx.graphics.getDeltaTime();
+		if(speedTime>25){
+			speed+=WIDTH/450;
+			speedTime=0;
+		}
 		if (position.x <  WIDTH + WIDTH/10){
-			position.x += WIDTH/125;
+			position.x += speed;
 			bounds.set(position.x + WIDTH/40 ,position.y + WIDTH/40, WIDTH/30);
 		}
 	}

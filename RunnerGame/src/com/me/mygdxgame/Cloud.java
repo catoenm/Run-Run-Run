@@ -19,8 +19,8 @@ public class Cloud {
 		this.texture = texture;
 	}
 	
-	public void update(){
-		position.x -= WIDTH/200;
+	public void update(double gameSpeed){
+		position.x -= gameSpeed - WIDTH/80;
 		if (position.x < -WIDTH/5){
 			position.x = WIDTH;
 			position.y = (float) (HEIGHT/9 * 4 + Math.random() * 4 * HEIGHT/9);

@@ -25,14 +25,13 @@ public class Rock{
 		bounds = new Circle(position, WIDTH/12);
 	}
 	
-	void update(){
-		position.x -= WIDTH/85;
+	void update(double gameSpeed){
+		position.x -= gameSpeed;
 		bounds.set(position.x + WIDTH/15 ,position.y + WIDTH/30, WIDTH/12);
 
 	}
 	public void draw(){
 		batch.draw(texture, position.x, position.y, WIDTH/6, WIDTH/6);
-		
 	}
 	
 	public double getSpeed() {

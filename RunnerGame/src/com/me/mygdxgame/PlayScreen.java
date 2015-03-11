@@ -35,10 +35,12 @@ public class PlayScreen implements Screen{
 	Texture cloud, background, playerSheet, roadLines, hearts, truck, planeTex, rockTex, sShipTex, shootButtonTex, bulletTex, roadBack, spaceBack, crateTex;
 	Player player;
 	double vel = 0;
-	boolean jumping = false, doubleJump = false, startCloud = false, waiting=false, shoot=false, truck1Hit=false, truck2Hit=false;
-	double time = 0, scoreTime = 0, reloadTime = 0, truckTime=0, aircraftTime=0, crateTime=0, rockTime=0;;
-	int score = 0, ammo = 3, numTrucks=0, numPlanes=0, numCrates=0, numRocks=0,numsShips=0;
+	double gamespeed= WIDTH/85;	
 	double gameSpeed = WIDTH/150;
+	boolean jumping = false, doubleJump = false, startCloud = false, waiting=false, shoot=false, truck1Hit=false, truck2Hit=false;
+	double time = 0, scoreTime = 0, reloadTime = 0, truckTime=0, aircraftTime=0, crateTime=0, rockTime=0, tScoreTime;
+	int score = 0, ammo = 5, numTrucks=0, numPlanes=0, numCrates=0, numRocks=0,numsShips=0;
+
 	BitmapFont font;
 	BitmapFont shadow;
 	
@@ -59,10 +61,9 @@ public class PlayScreen implements Screen{
 		player.updatePlayer();
 		checkFire();		
 		checkJump();
-		cloud1.update();
-		cloud2.update();
+		cloud1.update(gamespeed);
+		cloud2.update(gamespeed);
 		playerPos.y += vel;
-
 		if (score == 50)
 			background = roadBack;
 		else if (score == 125)
@@ -70,7 +71,6 @@ public class PlayScreen implements Screen{
 		
 		updateTimes();
 		
-
 		batch.begin();
 		batch.draw(background, backPos1.x, 0, WIDTH * 2, HEIGHT);
 		batch.draw(background, backPos2.x, 0, WIDTH * 2  + WIDTH/20, HEIGHT);
@@ -85,16 +85,22 @@ public class PlayScreen implements Screen{
 	}
 
 	void updateTimes(){
+		tScoreTime += Gdx.graphics.getDeltaTime();
+		if(tScoreTime>6){
+			gamespeed+=WIDTH/1250;
+			gameSpeed+=WIDTH/1500;
+			tScoreTime=0;
+		}
 		scoreTime += Gdx.graphics.getDeltaTime();
 		if (scoreTime > 1){
-			score++;
+			score+=2;
 			scoreTime = 0;
 		}
 
 		reloadTime += Gdx.graphics.getDeltaTime();
 		
 		if (reloadTime > 6){
-			if (ammo < 3)
+			if (ammo < 5)
 				ammo++;
 			reloadTime = 0;
 		}
@@ -106,7 +112,7 @@ public class PlayScreen implements Screen{
 		}
 		
 		aircraftTime+=Gdx.graphics.getDeltaTime();
-		if(score<125){
+		if(score<250){
 			
 			truckTime+= Gdx.graphics.getDeltaTime();
 			if(truckTime > 3){
@@ -155,7 +161,7 @@ public class PlayScreen implements Screen{
 		truckIterator = trucks.iterator();
 		while(truckIterator.hasNext()){
 			Truck nextTruck = truckIterator.next();
-			nextTruck.update(); 
+			nextTruck.update(gamespeed); 
 			if (nextTruck.getX() < -WIDTH/5)
 				truckIterator.remove();
 		}
@@ -189,7 +195,7 @@ public class PlayScreen implements Screen{
 		planeIterator = planes.iterator();
 		while(planeIterator.hasNext()){
 			Airplane nextPlane = planeIterator.next();
-			nextPlane.update(); 
+			nextPlane.update(gamespeed); 
 			if (nextPlane.getX() < -WIDTH/5)
 				planeIterator.remove();
 		}
@@ -224,7 +230,7 @@ public class PlayScreen implements Screen{
 	
 	void makeCrates(){
 		int height= (int)(Math.random()*HEIGHT/2+HEIGHT/3);
-		int n= (int) (Math.random()*20+1);
+		int n= (int) (Math.random()*25+1);
 		if(n==5 && numCrates>0){
 			crates.add(new Crate(height, batch, crateTex, (int) WIDTH));
 			numCrates--;
@@ -257,7 +263,7 @@ public class PlayScreen implements Screen{
 		
 	}
 	
-	void drawsShips(){
+	void drawShips(){
 		spaceshipIterator = spaceShips.iterator();
 		while(spaceshipIterator.hasNext()){
 			Spaceship nextSpaceship =spaceshipIterator.next();
@@ -269,7 +275,7 @@ public class PlayScreen implements Screen{
 		spaceshipIterator = spaceShips.iterator();
 		while(spaceshipIterator.hasNext()){
 			Spaceship nextSpaceship = spaceshipIterator.next();
-			nextSpaceship.update(); 
+			nextSpaceship.update(gamespeed); 
 			if (nextSpaceship.getX() < -WIDTH/5)
 				spaceshipIterator.remove();
 		}
@@ -280,7 +286,7 @@ public class PlayScreen implements Screen{
 		rockIterator = rocks.iterator();
 		while(rockIterator.hasNext()){
 			Rock nextRock = rockIterator.next();
-			nextRock.update(); 
+			nextRock.update(gamespeed); 
 			if (nextRock.getX() < -WIDTH/5)
 				rockIterator.remove();
 		}
@@ -381,7 +387,7 @@ public class PlayScreen implements Screen{
 			if(player.getBounds().overlaps(nextCrate.getBounds())){
 				crateIterator.remove();
 				numCrates--;
-				ammo=3;
+				ammo=5;
 			}
 		}
 	}
@@ -399,7 +405,7 @@ public class PlayScreen implements Screen{
 			
 			else if (player.getBounds().overlaps(nextTruck.getBounds3())){
 				vel=0;
-				playerPos.y= nextTruck.position.y+ WIDTH/7;
+				playerPos.y= nextTruck.position.y + HEIGHT/6 + HEIGHT/15;
 			}
 	
 			if (player.getBounds().overlaps(nextTruck.getBounds1()) || player.getBounds().overlaps(nextTruck.getBounds2()) ||player.getBounds().overlaps(nextTruck.getBounds2()))
@@ -475,8 +481,7 @@ public class PlayScreen implements Screen{
 		drawBullets();
 		drawCrates();
 		
-		if(score<150){
-		
+		if(score<250){
 			updatePlanes();
 			updateTrucks();
 			makeTrucks();
@@ -487,9 +492,8 @@ public class PlayScreen implements Screen{
 			bulletPlaneCollision();
 			drawTrucks();
 			drawPlanes();
-		}
-		
-		if(score>150){
+		}	
+		else {
 			updateRocks();
 			updateShips();
 			makeRocks();
@@ -499,8 +503,9 @@ public class PlayScreen implements Screen{
 			bulletRockCollision();
 			bulletSShipCollision();
 			drawRocks();
-			drawsShips();
-		}		
+			drawShips();
+		}
+		
 		cloud1.draw();
 		cloud2.draw();
 		shootButton.drawButton();

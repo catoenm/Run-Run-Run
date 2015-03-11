@@ -26,8 +26,8 @@ public class Spaceship{
 		bounds2 = new Rectangle(position.x + WIDTH/8, position.y + HEIGHT/20, WIDTH/10, WIDTH/10);
 		}
 	
-	void update(){
-		position.x -= WIDTH/85;
+	void update(double gameSpeed){
+		position.x -= gameSpeed;
 
 		bounds1.set(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/12);
 		bounds2.set(position.x + WIDTH/10, position.y + HEIGHT/50, WIDTH/16, HEIGHT/20);

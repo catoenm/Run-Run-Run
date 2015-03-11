@@ -13,7 +13,7 @@ public class Crate {
 	SpriteBatch batch;
 	Texture texture;
 	Vector2 position;
-	double speed = WIDTH/150;
+	double speed=WIDTH/150, speedTime;
 	Rectangle bounds;
 	
 	public Crate(int height, SpriteBatch batch, Texture texture, int x){
@@ -32,8 +32,13 @@ public class Crate {
 	}
 
 	public void update(){
+		speedTime=Gdx.graphics.getDeltaTime();
+		if(speedTime>25){
+			speed+=WIDTH/500;
+			speedTime=0;
+		}
 		position.x -= speed;
-		bounds.set(position.x, position.y, HEIGHT/12,HEIGHT/12);
+		bounds.set(position.x, position.y-HEIGHT/25, HEIGHT/12,HEIGHT/12);
 	}
 	public void draw(){
 		batch.draw(texture, position.x, position.y, WIDTH/12, WIDTH/12);

@@ -21,15 +21,15 @@ public class Airplane{
 		this.batch = batch;
 		this.texture = texture;
 
-		bounds1 = new Rectangle(position.x + WIDTH/48, position.y + HEIGHT/150, WIDTH/16, HEIGHT/50);
-		bounds2 = new Rectangle(position.x + WIDTH/25, position.y + HEIGHT/16, WIDTH/7, HEIGHT/43);
+		bounds1 = new Rectangle(position.x, position.y + HEIGHT/55, WIDTH/5, HEIGHT/16);
+		bounds2 = new Rectangle(position.x + WIDTH/25, position.y + HEIGHT/30, WIDTH/75, HEIGHT/12);
 		}
 	
-	void update(){
-		position.x -= WIDTH/85;
+	void update(double gameSpeed){
+		position.x -= gameSpeed;
 
-		bounds1.set(position.x, position.y + HEIGHT/125, WIDTH/16, HEIGHT/6);
-		bounds2.set(position.x + WIDTH/25, position.y + HEIGHT/15, WIDTH/9, HEIGHT/30);
+		bounds1.set(position.x, position.y + HEIGHT/55, WIDTH/5, HEIGHT/16);
+		bounds2.set(position.x + WIDTH/25, position.y + HEIGHT/30, WIDTH/75, HEIGHT/10);
 	}
 	
 	public void draw(){
